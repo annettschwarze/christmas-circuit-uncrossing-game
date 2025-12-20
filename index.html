@@ -10,19 +10,27 @@
             text-align: center;
             background-color: #0f172a;
             color: #e2e8f0;
-            overflow: hidden; /* Prevent scrollbar flickering from snow */
+            overflow: auto; /* Allow scrolling */
+            font-size: 2vh;
+        }
+        svg {
+            max-height: 70vh;
+            width: auto;
         }
         h1 {
             color: #ef4444;
             text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
             font-family: 'Georgia', serif;
+            font-size: 2em;
         }
         h2 {
             color: #22c55e;
             font-family: 'Georgia', serif;
+            font-size: 1.5em;
         }
         h3 {
             color: #fbbf24;
+            font-size: 1.2em;
         }
         .game-button {
             background-color: #b91c1c;
@@ -99,7 +107,7 @@
             transform-box: fill-box;
             transform-origin: center;
         }
-
+        
         /* Snowfall CSS */
         .snowflake {
             position: fixed;
@@ -126,358 +134,358 @@
 </head>
 <body>
 
-<h1>Christmas Tree Minigame</h1>
-<h2>Inspired by Blingtron's "Circuit-uncrossing game"</h2>
-<h3>Solve the puzzle by swapping baubles and uncrossing the lines, so the star shines brightly!</h3>
+    <h1>Christmas Tree Minigame</h1>
+    <h2>Inspired by Blingtron's "Circuit-uncrossing game"</h2>
+    <h3>Solve the puzzle by swapping baubles and uncrossing the lines, so the star shines brightly!</h3>
 
-<svg width="400" height="600" viewBox="0 -40 400 640" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <radialGradient id="redBauble" cx="30%" cy="30%" r="70%">
-            <stop offset="0%" stop-color="#ff6666" />
-            <stop offset="100%" stop-color="#cc0000" />
-        </radialGradient>
-        <radialGradient id="selectedBauble" cx="30%" cy="30%" r="70%">
-            <stop offset="0%" stop-color="#ffffff" />
-            <stop offset="100%" stop-color="#ff0000" />
-        </radialGradient>
+    <svg viewBox="0 -40 400 640" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <radialGradient id="redBauble" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#ff6666" />
+                <stop offset="100%" stop-color="#cc0000" />
+            </radialGradient>
+            <radialGradient id="selectedBauble" cx="30%" cy="30%" r="70%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="100%" stop-color="#ff0000" />
+            </radialGradient>
+            
+            <g id="candle">
+                <rect x="-4" y="0" width="8" height="20" fill="#fef3c7" />
+                <line x1="0" y1="0" x2="0" y2="-4" stroke="#4b5563" stroke-width="1" />
+                <path d="M0 -4 Q-4 -12 0 -18 Q4 -12 0 -4 Z" fill="#fbbf24">
+                     <animate attributeName="d" values="M0 -4 Q-4 -12 0 -18 Q4 -12 0 -4 Z;M0 -4 Q-3 -11 0 -17 Q3 -11 0 -4 Z;M0 -4 Q-4 -12 0 -18 Q4 -12 0 -4 Z" dur="0.5s" repeatCount="indefinite" />
+                     <animate attributeName="fill" values="#fbbf24;#f59e0b;#fbbf24" dur="0.3s" repeatCount="indefinite" />
+                </path>
+                <circle cx="0" cy="-10" r="12" fill="#fbbf24" opacity="0.3">
+                    <animate attributeName="r" values="12;14;12" dur="0.5s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.3;0.2;0.3" dur="0.5s" repeatCount="indefinite" />
+                </circle>
+            </g>
+        </defs>
+        
+        <!-- Ground Snow Heap -->
+        <path d="M -50 640 Q 200 550 450 640 Z" fill="white" />
 
-        <g id="candle">
-            <rect x="-4" y="0" width="8" height="20" fill="#fef3c7" />
-            <line x1="0" y1="0" x2="0" y2="-4" stroke="#4b5563" stroke-width="1" />
-            <path d="M0 -4 Q-4 -12 0 -18 Q4 -12 0 -4 Z" fill="#fbbf24">
-                <animate attributeName="d" values="M0 -4 Q-4 -12 0 -18 Q4 -12 0 -4 Z;M0 -4 Q-3 -11 0 -17 Q3 -11 0 -4 Z;M0 -4 Q-4 -12 0 -18 Q4 -12 0 -4 Z" dur="0.5s" repeatCount="indefinite" />
-                <animate attributeName="fill" values="#fbbf24;#f59e0b;#fbbf24" dur="0.3s" repeatCount="indefinite" />
-            </path>
-            <circle cx="0" cy="-10" r="12" fill="#fbbf24" opacity="0.3">
-                <animate attributeName="r" values="12;14;12" dur="0.5s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="0.3;0.2;0.3" dur="0.5s" repeatCount="indefinite" />
-            </circle>
+        <!-- Trunk -->
+        <rect x="176" y="500" width="48" height="80" fill="#8B4513" />
+
+        <!-- Presents -->
+        <g id="presents">
+            <!-- Present 1 (Left, Red) -->
+            <rect x="50" y="510" width="70" height="70" fill="#D32F2F" />
+            <rect x="80" y="510" width="10" height="70" fill="#FFC107" />
+            <rect x="50" y="540" width="70" height="10" fill="#FFC107" />
+            <path d="M 85 510 C 70 495 55 515 85 510 M 85 510 C 100 495 115 515 85 510" fill="none" stroke="#FFC107" stroke-width="3" />
+
+            <!-- Present 2 (Left, Green) -->
+            <rect x="110" y="540" width="50" height="40" fill="#388E3C" />
+            <rect x="130" y="540" width="10" height="40" fill="#FF5252" />
+            <rect x="110" y="555" width="50" height="10" fill="#FF5252" />
+            <path d="M 135 540 C 125 530 115 545 135 540 M 135 540 C 145 530 155 545 135 540" fill="none" stroke="#FF5252" stroke-width="3" />
+
+            <!-- Present 3 (Right, Blue) -->
+            <rect x="270" y="520" width="80" height="60" fill="#1976D2" />
+            <rect x="305" y="520" width="10" height="60" fill="#E0E0E0" />
+            <rect x="270" y="545" width="80" height="10" fill="#E0E0E0" />
+            <path d="M 310 520 C 295 505 280 525 310 520 M 310 520 C 325 505 340 525 310 520" fill="none" stroke="#E0E0E0" stroke-width="3" />
         </g>
-    </defs>
 
-    <!-- Ground Snow Heap -->
-    <path d="M -50 640 Q 200 550 450 640 Z" fill="white" />
+        <!-- Tree Layers -->
+        <polygon points="200,220 8,500 392,500" fill="#228B22" />
+        <polygon points="200,160 44,410 356,410" fill="#228B22" />
+        <polygon points="200,100 80,320 320,320" fill="#228B22" />
+        <polygon points="200,20 116,230 284,230" fill="#228B22" />
 
-    <!-- Trunk -->
-    <rect x="176" y="500" width="48" height="80" fill="#8B4513" />
+        <!-- Candles -->
+        <g>
+            <use href="#candle" x="120" y="190" />
+            <use href="#candle" x="280" y="190" />
+            
+            <use href="#candle" x="85" y="280" />
+            <use href="#candle" x="315" y="280" />
+            
+            <use href="#candle" x="50" y="370" />
+            <use href="#candle" x="350" y="370" />
+            
+            <use href="#candle" x="25" y="460" />
+            <use href="#candle" x="375" y="460" />
+        </g>
 
-    <!-- Presents -->
-    <g id="presents">
-        <!-- Present 1 (Left, Red) -->
-        <rect x="50" y="510" width="70" height="70" fill="#D32F2F" />
-        <rect x="80" y="510" width="10" height="70" fill="#FFC107" />
-        <rect x="50" y="540" width="70" height="10" fill="#FFC107" />
-        <path d="M 85 510 C 70 495 55 515 85 510 M 85 510 C 100 495 115 515 85 510" fill="none" stroke="#FFC107" stroke-width="3" />
+        <!-- Star -->
+        <polygon id="star" points="200,-40 210,-10 240,-10 220,10 230,40 200,20 170,40 180,10 160,-10 190,-10" fill="#B8860B" />
+        
+        <!-- Puzzle Container -->
+        <g id="sparkles"></g>
+        <g id="lines"></g>
+        <g id="ornaments"></g>
+    </svg>
 
-        <!-- Present 2 (Left, Green) -->
-        <rect x="110" y="540" width="50" height="40" fill="#388E3C" />
-        <rect x="130" y="540" width="10" height="40" fill="#FF5252" />
-        <rect x="110" y="555" width="50" height="10" fill="#FF5252" />
-        <path d="M 135 540 C 125 530 115 545 135 540 M 135 540 C 145 530 155 545 135 540" fill="none" stroke="#FF5252" stroke-width="3" />
+    <div style="margin-bottom: 20px; padding-top: 20px;">
+        <button class="game-button" onclick="initGame(5)"><span>5 Baubles</span></button>
+        <button class="game-button" onclick="initGame(17)"><span>17 Baubles</span></button>
+    </div>
+    
+    <div id="win-message">
+        <div id="win-text"></div>
+        <button class="close-button" onclick="document.getElementById('win-message').style.display='none'">Close</button>
+    </div>
 
-        <!-- Present 3 (Right, Blue) -->
-        <rect x="270" y="520" width="80" height="60" fill="#1976D2" />
-        <rect x="305" y="520" width="10" height="60" fill="#E0E0E0" />
-        <rect x="270" y="545" width="80" height="10" fill="#E0E0E0" />
-        <path d="M 310 520 C 295 505 280 525 310 520 M 310 520 C 325 505 340 525 310 520" fill="none" stroke="#E0E0E0" stroke-width="3" />
-    </g>
+    <p>&nbsp;</p>
 
-    <!-- Tree Layers -->
-    <polygon points="200,220 8,500 392,500" fill="#228B22" />
-    <polygon points="200,160 44,410 356,410" fill="#228B22" />
-    <polygon points="200,100 80,320 320,320" fill="#228B22" />
-    <polygon points="200,20 116,230 284,230" fill="#228B22" />
+    <script>
+        const linesGroup = document.getElementById('lines');
+        const ornamentsGroup = document.getElementById('ornaments');
+        const sparklesGroup = document.getElementById('sparkles');
+        const winMessage = document.getElementById('win-message');
+        const winText = document.getElementById('win-text');
+        const star = document.getElementById('star');
 
-    <!-- Candles -->
-    <g>
-        <use href="#candle" x="120" y="190" />
-        <use href="#candle" x="280" y="190" />
+        const positions5 = [
+            { cx: 120, cy: 400 }, { cx: 280, cy: 400 }, { cx: 150, cy: 280 }, { cx: 250, cy: 280 }, { cx: 200, cy: 160 }
+        ];
 
-        <use href="#candle" x="85" y="280" />
-        <use href="#candle" x="315" y="280" />
+        const positions17 = [
+            { cx: 80, cy: 480 }, { cx: 320, cy: 480 }, { cx: 120, cy: 440 }, { cx: 280, cy: 440 }, { cx: 200, cy: 460 },
+            { cx: 100, cy: 380 }, { cx: 300, cy: 380 }, { cx: 160, cy: 400 }, { cx: 240, cy: 400 }, { cx: 140, cy: 310 },
+            { cx: 260, cy: 310 }, { cx: 200, cy: 330 }, { cx: 170, cy: 240 }, { cx: 230, cy: 240 }, { cx: 180, cy: 160 },
+            { cx: 220, cy: 160 }, { cx: 200, cy: 100 }
+        ];
 
-        <use href="#candle" x="50" y="370" />
-        <use href="#candle" x="350" y="370" />
+        let currentState = {
+            nodes: [],
+            links: []
+        };
+        let selectedNodeId = null;
 
-        <use href="#candle" x="25" y="460" />
-        <use href="#candle" x="375" y="460" />
-    </g>
-
-    <!-- Star -->
-    <polygon id="star" points="200,-40 210,-10 240,-10 220,10 230,40 200,20 170,40 180,10 160,-10 190,-10" fill="#B8860B" />
-
-    <!-- Puzzle Container -->
-    <g id="sparkles"></g>
-    <g id="lines"></g>
-    <g id="ornaments"></g>
-</svg>
-
-<div style="margin-bottom: 20px; padding-top: 20px;">
-    <button class="game-button" onclick="initGame(5)"><span>5 Baubles</span></button>
-    <button class="game-button" onclick="initGame(17)"><span>17 Baubles</span></button>
-</div>
-
-<div id="win-message">
-    <div id="win-text"></div>
-    <button class="close-button" onclick="document.getElementById('win-message').style.display='none'">Close</button>
-</div>
-
-<p>&nbsp;</p>
-
-<script>
-    const linesGroup = document.getElementById('lines');
-    const ornamentsGroup = document.getElementById('ornaments');
-    const sparklesGroup = document.getElementById('sparkles');
-    const winMessage = document.getElementById('win-message');
-    const winText = document.getElementById('win-text');
-    const star = document.getElementById('star');
-
-    const positions5 = [
-        { cx: 120, cy: 400 }, { cx: 280, cy: 400 }, { cx: 150, cy: 280 }, { cx: 250, cy: 280 }, { cx: 200, cy: 160 }
-    ];
-
-    const positions17 = [
-        { cx: 80, cy: 480 }, { cx: 320, cy: 480 }, { cx: 120, cy: 440 }, { cx: 280, cy: 440 }, { cx: 200, cy: 460 },
-        { cx: 100, cy: 380 }, { cx: 300, cy: 380 }, { cx: 160, cy: 400 }, { cx: 240, cy: 400 }, { cx: 140, cy: 310 },
-        { cx: 260, cy: 310 }, { cx: 200, cy: 330 }, { cx: 170, cy: 240 }, { cx: 230, cy: 240 }, { cx: 180, cy: 160 },
-        { cx: 220, cy: 160 }, { cx: 200, cy: 100 }
-    ];
-
-    let currentState = {
-        nodes: [],
-        links: []
-    };
-    let selectedNodeId = null;
-
-    function generateLinks(count) {
-        const links = [];
-        // Create a ring
-        for (let i = 0; i < count; i++) {
-            links.push([i, (i + 1) % count]);
-        }
-        return links;
-    }
-
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    function initGame(count) {
-        selectedNodeId = null;
-        winMessage.style.display = "none";
-        if(star) star.classList.remove('star-glowing');
-        currentState.nodes = [];
-
-        const positions = count === 5 ? positions5 : positions17;
-        const shuffledPositions = shuffleArray([...positions]);
-
-        shuffledPositions.forEach((pos, index) => {
-            currentState.nodes.push({
-                id: index,
-                cx: pos.cx,
-                cy: pos.cy,
-                color: 'red'
-            });
-        });
-
-        currentState.links = generateLinks(count);
-        render();
-        checkWin(); // Check initial state
-    }
-
-    function render() {
-        linesGroup.innerHTML = '';
-        ornamentsGroup.innerHTML = '';
-
-        // Draw lines
-        currentState.links.forEach(link => {
-            const n1 = currentState.nodes.find(n => n.id === link[0]);
-            const n2 = currentState.nodes.find(n => n.id === link[1]);
-            if (n1 && n2) {
-                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-                line.setAttribute("x1", n1.cx);
-                line.setAttribute("y1", n1.cy);
-                line.setAttribute("x2", n2.cx);
-                line.setAttribute("y2", n2.cy);
-                line.setAttribute("stroke", "#FFD700"); // Golden
-                line.setAttribute("stroke-width", "3");
-                linesGroup.appendChild(line);
+        function generateLinks(count) {
+            const links = [];
+            // Create a ring
+            for (let i = 0; i < count; i++) {
+                links.push([i, (i + 1) % count]);
             }
-        });
+            return links;
+        }
 
-        // Draw nodes
-        currentState.nodes.forEach(node => {
-            const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            group.style.cursor = 'pointer';
-            group.onclick = (e) => {
-                e.stopPropagation();
-                handleNodeClick(node.id);
-            };
-
-            // Bauble body
-            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            circle.setAttribute("cx", node.cx);
-            circle.setAttribute("cy", node.cy);
-            circle.setAttribute("r", 12);
-
-            if (selectedNodeId === node.id) {
-                circle.setAttribute("fill", "url(#selectedBauble)");
-                circle.setAttribute("stroke", "#ffcccc");
-                circle.setAttribute("stroke-width", "2");
-            } else {
-                circle.setAttribute("fill", "url(#redBauble)");
-                circle.setAttribute("stroke", "#880000");
-                circle.setAttribute("stroke-width", "1");
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
-            group.appendChild(circle);
+            return array;
+        }
 
-            // Bauble cap
-            const cap = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-            cap.setAttribute("x", node.cx - 4);
-            cap.setAttribute("y", node.cy - 15);
-            cap.setAttribute("width", 8);
-            cap.setAttribute("height", 6);
-            cap.setAttribute("fill", "#DAA520");
-            group.appendChild(cap);
-
-            ornamentsGroup.appendChild(group);
-        });
-    }
-
-    function handleNodeClick(id) {
-        if (selectedNodeId === null) {
-            selectedNodeId = id;
-        } else if (selectedNodeId === id) {
+        function initGame(count) {
             selectedNodeId = null;
-        } else {
-            // Swap positions of the two nodes
-            const n1 = currentState.nodes.find(n => n.id === selectedNodeId);
-            const n2 = currentState.nodes.find(n => n.id === id);
-
-            const tempX = n1.cx;
-            const tempY = n1.cy;
-            n1.cx = n2.cx;
-            n1.cy = n2.cy;
-            n2.cx = tempX;
-            n2.cy = tempY;
-
-            selectedNodeId = null;
-
-            render();
-            // Check for win condition after swap and render
-            setTimeout(checkWin, 10);
-        }
-        render();
-    }
-
-    // --- Win Condition Logic ---
-
-    function crossProduct(a, b, c) {
-        return (b.cx - a.cx) * (c.cy - a.cy) - (b.cy - a.cy) * (c.cx - a.cx);
-    }
-
-    function doIntersect(p1, p2, p3, p4) {
-        const d1 = crossProduct(p3, p4, p1);
-        const d2 = crossProduct(p3, p4, p2);
-        const d3 = crossProduct(p1, p2, p3);
-        const d4 = crossProduct(p1, p2, p4);
-
-        if (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) &&
-            ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0))) {
-            return true;
-        }
-        return false;
-    }
-
-    function checkWin() {
-        let crossing = false;
-        const links = currentState.links;
-
-        for (let i = 0; i < links.length; i++) {
-            for (let j = i + 1; j < links.length; j++) {
-                const l1 = links[i];
-                const l2 = links[j];
-
-                // If links share a node, they don't cross in the puzzle sense
-                if (l1[0] === l2[0] || l1[0] === l2[1] || l1[1] === l2[0] || l1[1] === l2[1]) {
-                    continue;
-                }
-
-                const n1 = currentState.nodes.find(n => n.id === l1[0]);
-                const n2 = currentState.nodes.find(n => n.id === l1[1]);
-                const n3 = currentState.nodes.find(n => n.id === l2[0]);
-                const n4 = currentState.nodes.find(n => n.id === l2[1]);
-
-                if (doIntersect(n1, n2, n3, n4)) {
-                    crossing = true;
-                    break;
-                }
-            }
-            if (crossing) break;
-        }
-
-        if (!crossing) {
-            winText.innerText = "You Won! The Star Shines!";
-            winMessage.style.display = "flex";
-            if(star) star.classList.add('star-glowing');
-        } else {
             winMessage.style.display = "none";
             if(star) star.classList.remove('star-glowing');
-        }
-    }
+            currentState.nodes = [];
+            
+            const positions = count === 5 ? positions5 : positions17;
+            const shuffledPositions = shuffleArray([...positions]);
+            
+            shuffledPositions.forEach((pos, index) => {
+                currentState.nodes.push({
+                    id: index,
+                    cx: pos.cx,
+                    cy: pos.cy,
+                    color: 'red'
+                });
+            });
 
-    function createSparkles() {
-        sparklesGroup.innerHTML = '';
-        for(let i=0; i<40; i++) {
-            // Generate random point in main triangle area of the tree
-            // A=(200,40), B=(20,500), C=(380,500)
-            let r1 = Math.random();
-            let r2 = Math.random();
-            if (r1 + r2 > 1) {
-                r1 = 1 - r1;
-                r2 = 1 - r2;
+            currentState.links = generateLinks(count);
+            render();
+            checkWin(); // Check initial state
+        }
+
+        function render() {
+            linesGroup.innerHTML = '';
+            ornamentsGroup.innerHTML = '';
+
+            // Draw lines
+            currentState.links.forEach(link => {
+                const n1 = currentState.nodes.find(n => n.id === link[0]);
+                const n2 = currentState.nodes.find(n => n.id === link[1]);
+                if (n1 && n2) {
+                    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    line.setAttribute("x1", n1.cx);
+                    line.setAttribute("y1", n1.cy);
+                    line.setAttribute("x2", n2.cx);
+                    line.setAttribute("y2", n2.cy);
+                    line.setAttribute("stroke", "#FFD700"); // Golden
+                    line.setAttribute("stroke-width", "3");
+                    linesGroup.appendChild(line);
+                }
+            });
+
+            // Draw nodes
+            currentState.nodes.forEach(node => {
+                const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                group.style.cursor = 'pointer';
+                group.onclick = (e) => {
+                    e.stopPropagation();
+                    handleNodeClick(node.id);
+                };
+
+                // Bauble body
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", node.cx);
+                circle.setAttribute("cy", node.cy);
+                circle.setAttribute("r", 12);
+                
+                if (selectedNodeId === node.id) {
+                     circle.setAttribute("fill", "url(#selectedBauble)");
+                     circle.setAttribute("stroke", "#ffcccc");
+                     circle.setAttribute("stroke-width", "2");
+                } else {
+                     circle.setAttribute("fill", "url(#redBauble)");
+                     circle.setAttribute("stroke", "#880000"); 
+                     circle.setAttribute("stroke-width", "1");
+                }
+                group.appendChild(circle);
+
+                // Bauble cap
+                const cap = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                cap.setAttribute("x", node.cx - 4);
+                cap.setAttribute("y", node.cy - 15);
+                cap.setAttribute("width", 8);
+                cap.setAttribute("height", 6);
+                cap.setAttribute("fill", "#DAA520");
+                group.appendChild(cap);
+
+                ornamentsGroup.appendChild(group);
+            });
+        }
+
+        function handleNodeClick(id) {
+            if (selectedNodeId === null) {
+                selectedNodeId = id;
+            } else if (selectedNodeId === id) {
+                selectedNodeId = null;
+            } else {
+                // Swap positions of the two nodes
+                const n1 = currentState.nodes.find(n => n.id === selectedNodeId);
+                const n2 = currentState.nodes.find(n => n.id === id);
+                
+                const tempX = n1.cx;
+                const tempY = n1.cy;
+                n1.cx = n2.cx;
+                n1.cy = n2.cy;
+                n2.cx = tempX;
+                n2.cy = tempY;
+                
+                selectedNodeId = null;
+                
+                render();
+                // Check for win condition after swap and render
+                setTimeout(checkWin, 10);
+            }
+            render();
+        }
+
+        // --- Win Condition Logic ---
+
+        function crossProduct(a, b, c) {
+            return (b.cx - a.cx) * (c.cy - a.cy) - (b.cy - a.cy) * (c.cx - a.cx);
+        }
+
+        function doIntersect(p1, p2, p3, p4) {
+             const d1 = crossProduct(p3, p4, p1);
+             const d2 = crossProduct(p3, p4, p2);
+             const d3 = crossProduct(p1, p2, p3);
+             const d4 = crossProduct(p1, p2, p4);
+
+             if (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) &&
+                 ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0))) {
+                 return true;
+             }
+             return false;
+        }
+
+        function checkWin() {
+            let crossing = false;
+            const links = currentState.links;
+            
+            for (let i = 0; i < links.length; i++) {
+                for (let j = i + 1; j < links.length; j++) {
+                    const l1 = links[i];
+                    const l2 = links[j];
+                    
+                    // If links share a node, they don't cross in the puzzle sense
+                    if (l1[0] === l2[0] || l1[0] === l2[1] || l1[1] === l2[0] || l1[1] === l2[1]) {
+                        continue;
+                    }
+                    
+                    const n1 = currentState.nodes.find(n => n.id === l1[0]);
+                    const n2 = currentState.nodes.find(n => n.id === l1[1]);
+                    const n3 = currentState.nodes.find(n => n.id === l2[0]);
+                    const n4 = currentState.nodes.find(n => n.id === l2[1]);
+                    
+                    if (doIntersect(n1, n2, n3, n4)) {
+                        crossing = true;
+                        break;
+                    }
+                }
+                if (crossing) break;
             }
 
-            const x = 200 + r1 * (20 - 200) + r2 * (380 - 200);
-            const y = 40 + r1 * (500 - 40) + r2 * (500 - 40);
-
-            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            circle.setAttribute("cx", x);
-            circle.setAttribute("cy", y);
-            circle.setAttribute("r", Math.random() * 2 + 1);
-            circle.classList.add("sparkle");
-            circle.style.animationDelay = (Math.random() * 2) + "s";
-            sparklesGroup.appendChild(circle);
+            if (!crossing) {
+                winText.innerText = "You Won! The Star Shines!";
+                winMessage.style.display = "flex";
+                if(star) star.classList.add('star-glowing');
+            } else {
+                winMessage.style.display = "none";
+                if(star) star.classList.remove('star-glowing');
+            }
         }
-    }
+        
+        function createSparkles() {
+            sparklesGroup.innerHTML = '';
+            for(let i=0; i<40; i++) {
+                 // Generate random point in main triangle area of the tree
+                 // A=(200,40), B=(20,500), C=(380,500)
+                 let r1 = Math.random();
+                 let r2 = Math.random();
+                 if (r1 + r2 > 1) {
+                     r1 = 1 - r1;
+                     r2 = 1 - r2;
+                 }
+                 
+                 const x = 200 + r1 * (20 - 200) + r2 * (380 - 200);
+                 const y = 40 + r1 * (500 - 40) + r2 * (500 - 40);
+                 
+                 const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                 circle.setAttribute("cx", x);
+                 circle.setAttribute("cy", y);
+                 circle.setAttribute("r", Math.random() * 2 + 1);
+                 circle.classList.add("sparkle");
+                 circle.style.animationDelay = (Math.random() * 2) + "s";
+                 sparklesGroup.appendChild(circle);
+            }
+        }
 
-    // Snowfall logic
-    function createSnowflake() {
-        const snowflake = document.createElement('div');
-        snowflake.classList.add('snowflake');
-        snowflake.innerText = '❄';
-        snowflake.style.left = Math.random() * 100 + 'vw';
-        const duration = Math.random() * 5 + 5;
-        snowflake.style.animationDuration = duration + 's';
-        snowflake.style.opacity = Math.random() * 0.7 + 0.3;
-        snowflake.style.fontSize = (Math.random() * 15 + 10) + 'px';
+        // Snowfall logic
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerText = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 5 + 5; 
+            snowflake.style.animationDuration = duration + 's';
+            snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+            snowflake.style.fontSize = (Math.random() * 0.5 + 0.8) + 'em';
+            
+            document.body.appendChild(snowflake);
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, duration * 1000);
+        }
 
-        document.body.appendChild(snowflake);
+        setInterval(createSnowflake, 200);
 
-        setTimeout(() => {
-            snowflake.remove();
-        }, duration * 1000);
-    }
-
-    setInterval(createSnowflake, 200);
-
-    // Initial render
-    createSparkles();
-    initGame(5);
-</script>
+        // Initial render
+        createSparkles();
+        initGame(5);
+    </script>
 </body>
 </html>
